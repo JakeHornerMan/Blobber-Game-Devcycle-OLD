@@ -7,16 +7,18 @@ public class Blue : MonoBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D bc;
     public Animator anim;
-    private enum State { run, death }
+    public enum State { run, death }
     private IEnumerator coroutine;
     [SerializeField] private LayerMask platformLayerMask;
+    [SerializeField] GameObject Spawner1;
 
-    private State mode = State.run;
+    public State mode = State.run;
     public float speed;
     private bool movingRight;
     public Transform wallDetection;
     public float chance;
     public bool DisableMovement = false;
+    private int blueNum = 10;
 
 
     void Start()
@@ -93,10 +95,13 @@ public class Blue : MonoBehaviour
         {
             coroutine = WaitAndDestroy(3f);
             StartCoroutine(coroutine);
+            //Spawner1.GetCompnent<Spawner1>().spawnBlue();
+ 
         }
     }
 
     public void JumpedOn(){
         mode = State.death;
+        blueNum = blueNum - 1;
     }
 }

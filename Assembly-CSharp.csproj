@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Blue.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Player_Move.cs" />
+    <Compile Include="Assets\Scripts\spawnerBlue.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Horner/KillerBlob/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

@@ -127,12 +127,12 @@ public class Player_Move : MonoBehaviour
         if (!IsGrounded() && killable == true && action == State.absorb)
         {
             killable = false;
-            if (other.gameObject.tag == "Enemy")
+            if (other.gameObject.tag == "Enemy" ) //&& blue.mode == State.death)
             {
                 killable = false;
                 blue.JumpedOn();
                 blue.Death();
-                coroutine = WaitAndJump(2.2f);
+                coroutine = WaitAndJump(1f);//2.2);
                 StartCoroutine(coroutine);
                 killable = false;
             }
@@ -145,10 +145,10 @@ public class Player_Move : MonoBehaviour
     IEnumerator WaitAndJump(float _waitTime)
     {
         DisableMovement = true;
-        yield return new WaitForSeconds(_waitTime);
-        DisableMovement = false;
-        JumpMultiplier();
-
+      
+            yield return new WaitForSeconds(_waitTime);
+            DisableMovement = false;
+            JumpMultiplier();
         
     }
     public void JumpMultiplier() {
@@ -159,5 +159,8 @@ public class Player_Move : MonoBehaviour
         }
         rb.velocity = Vector2.up * jumpVelocity;
     }
+
+    //getters & setters
+    
 }
 

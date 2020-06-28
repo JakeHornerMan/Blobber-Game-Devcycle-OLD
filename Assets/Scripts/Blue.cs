@@ -4,26 +4,28 @@ using UnityEngine;
 
 public class Blue : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    //private Rigidbody2D rb;
     private BoxCollider2D bc;
     public Animator anim;
     public enum State { run, death }
     private IEnumerator coroutine;
     [SerializeField] private LayerMask platformLayerMask;
-    [SerializeField] GameObject Spawner1;
+    public GameObject Spawner;
+    spawnerBlue mySpawnScript;
 
-    public State mode = State.run;
+    State mode = State.run;
     public float speed;
     private bool movingRight;
     public Transform wallDetection;
-    public float chance;
-    public bool DisableMovement = false;
+    float chance;
+    bool DisableMovement = false;
     private int blueNum = 10;
 
 
     void Start()
     {
-        rb = transform.GetComponent<Rigidbody2D>();
+        mySpawnScript = Spawner.GetComponent<spawnerBlue>();
+        //rb = transform.GetComponent<Rigidbody2D>();
         bc = transform.GetComponent<BoxCollider2D>();
         chance = Random.Range(1f, 100f);
         if (chance <= 50)
@@ -43,6 +45,9 @@ public class Blue : MonoBehaviour
         {
             blueMove();
         }
+        else if (DisableMovement == true) {
+
+        }
     }
 
     public void blueMove() {
@@ -59,7 +64,7 @@ public class Blue : MonoBehaviour
         }
         else if (DisableMovement == true)
         {
-            
+            transform.Translate(new Vector2 (0f,0f));
         }
     }
 
@@ -102,6 +107,6 @@ public class Blue : MonoBehaviour
 
     public void JumpedOn(){
         mode = State.death;
-        blueNum = blueNum - 1;
+        mySpawnScript.opening();
     }
 }

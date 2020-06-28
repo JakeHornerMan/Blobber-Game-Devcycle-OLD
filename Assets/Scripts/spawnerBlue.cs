@@ -5,26 +5,58 @@ using UnityEngine;
 public class spawnerBlue : MonoBehaviour
 {
     private IEnumerator coroutine;
-    private int blueNum = 9;
-    [SerializeField]
-    private GameObject bluePrefab;
+    [SerializeField] private GameObject bluePrefab;
+    public Animator anim;
+    public enum State { closed, opening, open, closing }
+    public State mode;
+
     // Start is called before the first frame update
 
-    public void Update() {
-        if (blueNum < 10) {
-            spawnBlue();
-        }
+    void Start() {
+        
     }
-    public void spawnBlue(){
-        blueNum++;
-        coroutine = WaitAndCreate(5f);
+
+    public void FixedUpdate() {
+        anim.SetInteger("state", (int)mode);
+    }
+
+    public void opening() {
+        coroutine = OpeningandWait(1.5f);
+        StartCoroutine(coroutine);
+    }
+    IEnumerator OpeningandWait(float _waitTime)
+    {
+        mode = State.opening;
+        yield return new WaitForSeconds(_waitTime);
+        open();
+    }
+
+    void open() {
+        
+        coroutine = WaitAndCreate(2f);
         StartCoroutine(coroutine);
     }
  
     IEnumerator WaitAndCreate(float _waitTime)
     {
-        yield return new WaitForSeconds(_waitTime);
+        mode = State.open;
         GameObject b = Instantiate(bluePrefab) as GameObject;
         b.transform.position = new Vector3(-39.4f, -5.98f, 0f);
+        yield return new WaitForSeconds(_waitTime);
+        closing();
+        
+    }
+    void closing() {
+        coroutine = ClosingAndWait(1.2f);
+        StartCoroutine(coroutine);
+    }
+    IEnumerator ClosingAndWait(float _waitTime)
+    {
+        mode = State.closing;
+        yield return new WaitForSeconds(_waitTime);
+        close();
+    }
+    void close() {
+        mode = State.closed;
     }
 }

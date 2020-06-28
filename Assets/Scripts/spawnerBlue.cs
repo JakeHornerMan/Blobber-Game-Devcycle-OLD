@@ -33,7 +33,7 @@ public class spawnerBlue : MonoBehaviour
 
     void open() {
         
-        coroutine = WaitAndCreate(2f);
+        coroutine = WaitAndCreate(0.5f);
         StartCoroutine(coroutine);
     }
  

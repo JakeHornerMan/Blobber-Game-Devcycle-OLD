@@ -69,7 +69,12 @@ public class Player_Move : MonoBehaviour
             rb.velocity = Vector2.up * jumpVelocity;
         }
         if (!IsGrounded() && Input.GetKeyDown(KeyCode.RightShift)) {
-           //increase gravity scale
+            //increase gravity scale
+            FindObjectOfType<Rigidbody2D>().gravityScale = 16;
+        }
+        //this achieved nothing
+        else if (!Input.GetKeyDown(KeyCode.RightShift)) {
+            FindObjectOfType<Rigidbody2D>().gravityScale = 8;
         }
     }
     private bool IsGrounded() {
@@ -127,7 +132,7 @@ public class Player_Move : MonoBehaviour
         if (!IsGrounded() && killable == true && action == State.absorb)
         {
             killable = false;
-            if (other.gameObject.tag == "Enemy" ) //&& blue.mode == State.death)
+            if (other.gameObject.tag == "Enemy") //&& blue.mode != State.death)
             {
                 killable = false;
                 blue.JumpedOn();
@@ -159,8 +164,5 @@ public class Player_Move : MonoBehaviour
         }
         rb.velocity = Vector2.up * jumpVelocity;
     }
-
-    //getters & setters
-    
 }
 

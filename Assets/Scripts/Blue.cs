@@ -4,28 +4,22 @@ using UnityEngine;
 
 public class Blue : MonoBehaviour
 {
-    //private Rigidbody2D rb;
     private BoxCollider2D bc;
     public Animator anim;
     public enum State { run, death }
     private IEnumerator coroutine;
     [SerializeField] private LayerMask platformLayerMask;
-    public GameObject Spawner;
-    spawnerBlue mySpawnScript;
 
-    State mode = State.run;
+    public State mode = State.run;
     public float speed;
     private bool movingRight;
     public Transform wallDetection;
     float chance;
     bool DisableMovement = false;
-    private int blueNum = 10;
 
 
     void Start()
     {
-        mySpawnScript = Spawner.GetComponent<spawnerBlue>();
-        //rb = transform.GetComponent<Rigidbody2D>();
         bc = transform.GetComponent<BoxCollider2D>();
         chance = Random.Range(1f, 100f);
         if (chance <= 50)
@@ -37,7 +31,7 @@ public class Blue : MonoBehaviour
             movingRight = false;
         }
     }
-     // Update is called once per frame
+     
     void FixedUpdate() {
         anim.SetInteger("blueState", (int)mode);
         blueDirection();
@@ -100,13 +94,11 @@ public class Blue : MonoBehaviour
         {
             coroutine = WaitAndDestroy(3f);
             StartCoroutine(coroutine);
-            //Spawner1.GetCompnent<Spawner1>().spawnBlue();
- 
         }
     }
 
     public void JumpedOn(){
         mode = State.death;
-        mySpawnScript.opening();
+        FindObjectOfType<spawnerBlue>().opening();
     }
 }

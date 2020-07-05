@@ -18,6 +18,8 @@ public class Player_Move : MonoBehaviour
     public float jumpVelocity = 40f;
     public float multiplier = 1.2f;
     private float moveX;
+    private float points = 100;
+    private int pointSet;
 
     private IEnumerator coroutine;
 
@@ -91,6 +93,7 @@ public class Player_Move : MonoBehaviour
             {
                 action = State.ground;
                 jumpVelocity = 40f;
+                pointSet = 0;
                 rayColor = Color.green;
             }
             
@@ -137,7 +140,7 @@ public class Player_Move : MonoBehaviour
                 killable = false;
                 blue.JumpedOn();
                 blue.Death();
-                coroutine = WaitAndJump(1f);//2.2);
+                coroutine = WaitAndJump(1.5f);//2.2);
                 StartCoroutine(coroutine);
                 killable = false;
             }
@@ -151,9 +154,10 @@ public class Player_Move : MonoBehaviour
     {
         DisableMovement = true;
       
-            yield return new WaitForSeconds(_waitTime);
-            DisableMovement = false;
-            JumpMultiplier();
+        yield return new WaitForSeconds(_waitTime);
+        DisableMovement = false;
+        JumpMultiplier();
+        AddPoints();
         
     }
     public void JumpMultiplier() {
@@ -163,6 +167,30 @@ public class Player_Move : MonoBehaviour
             jumpVelocity = 150f;
         }
         rb.velocity = Vector2.up * jumpVelocity;
+    }
+    public void AddPoints() {
+        pointSet++;
+        if (pointSet == 1 || pointSet == 2)
+        {
+            points = 50;
+        }
+        else if (pointSet == 3 || pointSet == 4)
+        {
+            points = 75;
+        }
+        else if (pointSet == 5 || pointSet == 6)
+        {
+            points = 125;
+        }
+        else if (pointSet == 7 || pointSet == 8)
+        {
+            points = 250;
+        }
+        else if (pointSet == 9 || pointSet == 10)
+        {
+            points = 500;
+        }
+        Score.scoreAmount += points;
     }
 }
 

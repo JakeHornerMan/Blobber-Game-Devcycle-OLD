@@ -33,7 +33,7 @@ public class spawnerBlue : MonoBehaviour
 
     void open() {
         
-        coroutine = WaitAndCreate(0.5f);
+        coroutine = WaitAndCreate(0.3f);
         StartCoroutine(coroutine);
     }
  
@@ -47,7 +47,7 @@ public class spawnerBlue : MonoBehaviour
         
     }
     void closing() {
-        coroutine = ClosingAndWait(1.2f);
+        coroutine = ClosingAndWait(1.1f);
         StartCoroutine(coroutine);
     }
     IEnumerator ClosingAndWait(float _waitTime)

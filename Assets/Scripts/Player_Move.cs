@@ -10,6 +10,7 @@ public class Player_Move : MonoBehaviour
     private BoxCollider2D bc;
     public Animator anim;
     private enum State {ground, jump, fall, absorb}
+    public ParticleSystem acid;
 
     private bool killable = false;
     private bool DisableMovement = false;
@@ -100,6 +101,7 @@ public class Player_Move : MonoBehaviour
             else if (raycastHit2.collider != null)
             {
                 action = State.absorb;
+                acid.Play();
                 rayColor = Color.blue;
             }
             

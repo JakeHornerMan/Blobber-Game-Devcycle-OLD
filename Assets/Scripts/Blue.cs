@@ -92,7 +92,7 @@ public class Blue : MonoBehaviour
     {
         if (mode == State.death)
         {
-            coroutine = WaitAndDestroy(3f);
+            coroutine = WaitAndDestroy(2f);
             StartCoroutine(coroutine);
         }
     }

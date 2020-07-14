@@ -11,12 +11,12 @@ public class Score : MonoBehaviour
     void Start()
     {
         scoreText = GetComponent<Text>();
-        scoreAmount = 0000000000;
+        scoreAmount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "Score: " +  scoreAmount;
+        scoreText.text = scoreAmount.ToString();
     }
 }

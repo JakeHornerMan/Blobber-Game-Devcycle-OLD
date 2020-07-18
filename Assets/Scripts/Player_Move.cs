@@ -29,6 +29,7 @@ public class Player_Move : MonoBehaviour
     {
         rb = transform.GetComponent<Rigidbody2D>();
         bc = transform.GetComponent<BoxCollider2D>();
+        Score.scoreAmount = 0;
     }
 
     void FixedUpdate()

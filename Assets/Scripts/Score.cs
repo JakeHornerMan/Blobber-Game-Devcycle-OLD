@@ -11,7 +11,6 @@ public class Score : MonoBehaviour
     void Start()
     {
         scoreText = GetComponent<Text>();
-        scoreAmount = 0;
     }
 
     // Update is called once per frame
@@ -19,4 +18,7 @@ public class Score : MonoBehaviour
     {
         scoreText.text = scoreAmount.ToString();
     }
+    /*public void NewGame() {
+        scoreAmount = 0;
+    }*/
 }

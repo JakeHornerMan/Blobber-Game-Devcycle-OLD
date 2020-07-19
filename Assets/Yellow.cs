@@ -5,38 +5,47 @@ using UnityEngine;
 public class Yellow : MonoBehaviour
 {
     public float speed;
-    public int zigzag;
+    private int zigzag;
     public Transform wallDetection;
-    private int movingRight;
+    private bool movingRight;
+    private float chance;
     [SerializeField] private LayerMask platformLayerMask;
     private IEnumerator coroutine;
-    // Start is called before the first frame update
+    
     void Start()
     {
-        //transform.Translate(new Vector3(-7f, 43.3f, 0f) * speed * Time.deltaTime);
-        //transform.Translate(0, speed * Time.deltaTime, 0);
         transform.Translate(Vector2.left * speed * Time.deltaTime);
-        zigzag = Random.Range(1, 2);
-        movingRight = Random.Range(1, 2);
+        chance = Random.Range(0f, 2f);
+
+        if (chance <= 1)
+        {
+            movingRight = true;
+            zigzag = 2;
+        }
+        else if (chance >= 1) {
+            movingRight = false;
+            zigzag = 1;
+        }
+            
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Movement();
+        yellowWallHit();
     }
     public void Movement() {
-        if (movingRight == 1)
+        if (movingRight == true)
         {
             transform.Translate(Vector2.right * speed * Time.deltaTime);
             transform.localScale = new Vector2(-1, 1);
         }
-        else if (movingRight == 2)
+        else if (movingRight == false)
         {
             transform.Translate(Vector2.left * speed * Time.deltaTime);
             transform.localScale = new Vector2(1, 1);
         }
-        //transform.Translate(Vector2.left * speed * Time.deltaTime);
+        
         ZigZag();
         if (zigzag == 1)
         {
@@ -65,13 +74,13 @@ public class Yellow : MonoBehaviour
         if (wallInfo.collider == true)
         {
 
-            if (movingRight == 2)
+            if (movingRight == false)
             {
-                movingRight =1;
+                movingRight =true;
             }
-            else if (movingRight == 1)
+            else if (movingRight == true)
             {
-                movingRight = 2;
+                movingRight = false;
             }
         }
 

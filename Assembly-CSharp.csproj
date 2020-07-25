@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\AdvancedCamera.cs" />
+    <Compile Include="Assets\fireball.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Blue.cs" />

@@ -1,25 +1,13 @@
 fileFormatVersion: 2
-guid: 11a133b6a7bbc224ba2a8de7faa52a38
+guid: 30f065a5e2b35fe46be8e5f43c67d396
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3992350469286968652
-    second: scientist1Spritesheet_0
+      213: -6428001968289669060
+    second: fireballSprites_0
   - first:
-      213: -2213397859196464819
-    second: scientist1Spritesheet_1
-  - first:
-      213: 753717125067663165
-    second: scientist1Spritesheet_2
-  - first:
-      213: 6541269542575138774
-    second: scientist1Spritesheet_3
-  - first:
-      213: -80424113186027701
-    second: scientist1Spritesheet_4
-  - first:
-      213: 8554173217177054218
-    second: scientist1Spritesheet_5
+      213: 3860518120472042390
+    second: fireballSprites_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -63,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 6
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -152,7 +140,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: scientist1Spritesheet_0
+      name: fireballSprites_0
       rect:
         serializedVersion: 2
         x: 0
@@ -166,14 +154,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b0c88aa733283147b16144836c94b81
-      internalID: -3992350469286968652
+      spriteID: 15d156192aa0fd547a57152aa8e09362
+      internalID: -6428001968289669060
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: scientist1Spritesheet_1
+      name: fireballSprites_1
       rect:
         serializedVersion: 2
         x: 32
@@ -187,92 +175,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02eb09d3452599948861bfe4244618f7
-      internalID: -2213397859196464819
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: scientist1Spritesheet_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 78719e1f34b18874db1e18b45ce04713
-      internalID: 753717125067663165
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: scientist1Spritesheet_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ade948f9b2f2eb248811715364956c84
-      internalID: 6541269542575138774
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: scientist1Spritesheet_4
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 927015f1893bd59409393a1c22bbb584
-      internalID: -80424113186027701
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: scientist1Spritesheet_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ecb2319517f336847b6e0269bab77e3a
-      internalID: 8554173217177054218
+      spriteID: 28f229fb492ae19468d3f74049b46c9b
+      internalID: 3860518120472042390
       vertices: []
       indices: 
       edges: []

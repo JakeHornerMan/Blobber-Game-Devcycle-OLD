@@ -11,7 +11,10 @@ public class Yellow : MonoBehaviour
     private float chance;
     [SerializeField] private LayerMask platformLayerMask;
     private IEnumerator coroutine;
-    
+    [SerializeField] private GameObject fireballPrefab;
+    GameObject gun;
+    Vector3 target;
+
     void Start()
     {
         transform.Translate(Vector2.left * speed * Time.deltaTime);
@@ -26,24 +29,27 @@ public class Yellow : MonoBehaviour
             movingRight = false;
             zigzag = 1;
         }
-            
+        Shooting();
     }
 
     void FixedUpdate()
     {
         Movement();
         yellowWallHit();
+        
     }
     public void Movement() {
         if (movingRight == true)
         {
             transform.Translate(Vector2.right * speed * Time.deltaTime);
             transform.localScale = new Vector2(-1, 1);
+            //transform.Rotate(0f, 180f, 0f);
         }
         else if (movingRight == false)
         {
             transform.Translate(Vector2.left * speed * Time.deltaTime);
             transform.localScale = new Vector2(1, 1);
+            //transform.Rotate(0f, 0f, 0f);
         }
         
         ZigZag();
@@ -84,5 +90,20 @@ public class Yellow : MonoBehaviour
             }
         }
 
+    }
+    public void Shooting() {
+        coroutine = ShootTimer(5f);
+        StartCoroutine(coroutine);
+    }
+    IEnumerator ShootTimer(float _waitTime) {
+        yield return new WaitForSeconds(_waitTime);
+        Shoot();
+    }
+    public void Shoot() {
+        GameObject f = Instantiate(fireballPrefab) as GameObject;
+        gun = GameObject.Find("Gun");
+        target = gun.transform.position;
+        f.transform.position = target;
+        Shooting();
     }
 }

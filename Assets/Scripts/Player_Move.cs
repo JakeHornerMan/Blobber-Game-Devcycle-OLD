@@ -21,8 +21,10 @@ public class Player_Move : MonoBehaviour
     private float moveX;
     private float points = 100;
     private int pointSet;
+    private string facingDir;
 
     private IEnumerator coroutine;
+    public Transform wallDetection;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,7 @@ public class Player_Move : MonoBehaviour
     {
         playerMove();
         anim.SetInteger("state", (int)action);
+        //wallDirection();  SHIT DONT WORK
     }
 
     public void playerMove()
@@ -54,12 +57,14 @@ public class Player_Move : MonoBehaviour
         {
             rb.velocity = new Vector2(-speed, rb.velocity.y);
             transform.localScale = new Vector2(-1, 1);
+            facingDir = "left";
         }
         else {
             if (Input.GetKey(KeyCode.RightArrow))
             {
                 rb.velocity = new Vector2(+speed, rb.velocity.y);
                 transform.localScale = new Vector2(1, 1);
+                facingDir = "right";
             }
             else {
                 rb.velocity = new Vector2(0, rb.velocity.y);
@@ -129,10 +134,51 @@ public class Player_Move : MonoBehaviour
         Debug.Log(raycastHit.collider);
         return raycastHit.collider != null;
     }
+    /*
+    public void wallDirection()
+    {
 
+        RaycastHit2D wallInfo = Physics2D.Raycast(wallDetection.position, Vector2.left, 0.5f, platformLayerMask);
 
+        if (wallInfo.collider == true)
+        {
+            if (facingDir == "right")
+            {
+                coroutine = bounceLeft(1f);
+            }
+            else if (facingDir == "left")
+            {
+                coroutine = bounceRight(1f);
+            }
+        }
+    }
+    IEnumerator bounceLeft(float _waitTime)
+    {
+        DisableMovement = true;
+        transform.localScale = new Vector2(-1, 1);
+        //rb.AddForce(new Vector2(-speed, rb.velocity.y));
+        rb.velocity = new Vector2(-speed, rb.velocity.y);
+        //transform.Translate(Vector2.left * speed * Time.deltaTime);
+        yield return new WaitForSeconds(_waitTime);
+        //transform.Translate(Vector2.left * 0 * Time.deltaTime);
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        DisableMovement = false;
+    }
+    IEnumerator bounceRight(float _waitTime)
+    {
+        DisableMovement = true;
+        transform.localScale = new Vector2(1, 1);
+        //rb.AddForce(new Vector2(+speed, rb.velocity.y));
+        rb.velocity = new Vector2(+speed, rb.velocity.y);
+        //transform.Translate(Vector2.right * speed * Time.deltaTime);
+        yield return new WaitForSeconds(_waitTime);
+        //transform.Translate(Vector2.right * 0 * Time.deltaTime);
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        DisableMovement = false;
+    }
+    */
 
-    public void OnCollisionEnter2D(Collision2D other)
+        void OnCollisionEnter2D(Collision2D other)
     {
         Blue blue = other.gameObject.GetComponent<Blue>();
         if (!IsGrounded() && killable == true && action == State.absorb)

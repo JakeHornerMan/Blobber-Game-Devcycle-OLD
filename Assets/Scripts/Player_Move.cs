@@ -25,12 +25,21 @@ public class Player_Move : MonoBehaviour
 
     private IEnumerator coroutine;
 
+    //wallbounce test
+    public Transform originalObject;
+    public Transform reflectedObject;
+    Vector3 pushRight;
+    Vector3 pushLeft;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
         bc = transform.GetComponent<BoxCollider2D>();
         Score.scoreAmount = 0;
+        //wall bounce
+        pushRight = new Vector3(5f, 0f, 0f);
+        pushLeft = new Vector3(-5f, 0f, 0f);
     }
 
     void FixedUpdate()
@@ -136,30 +145,38 @@ public class Player_Move : MonoBehaviour
     public void wallBounce() {
         if (facingRight == true)
         {
-            coroutine = bounceLeft(0.5f);
+            coroutine = bounceLeft(0.2f);
             StartCoroutine(coroutine);
         }
         else if (facingRight== false) {
-            coroutine = bounceRight(0.5f);
+            coroutine = bounceRight(0.2f);
             StartCoroutine(coroutine);
         }
     }
 
     IEnumerator bounceLeft(float _waitTime)
     {
-        //DisableMovement = true;
+        DisableMovement = true;
         transform.localScale = new Vector2(-1, 1);
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
+        rb.AddForce(pushRight * speed, ForceMode2D.Impulse);
+        facingRight = false;
+        //rb.velocity = Vector2.left * jumpVelocity;
+        //reflectedObject.position = Vector3.Reflect(originalObject.position, Vector3.left);
+        //transform.Translate(Vector2.left * speed * Time.deltaTime);
         yield return new WaitForSeconds(_waitTime);
-        //DisableMovement = false;
+        DisableMovement = false;
     }
     IEnumerator bounceRight(float _waitTime)
     {
-        //DisableMovement = true;
+        DisableMovement = true;
         transform.localScale = new Vector2(1, 1);
-        transform.Translate(Vector2.right * speed * Time.deltaTime);
+        rb.AddForce(pushRight * speed, ForceMode2D.Impulse);
+        facingRight = true;
+        //rb.velocity = Vector2.right * jumpVelocity;
+        //reflectedObject.position = Vector3.Reflect(originalObject.position, Vector3.right);
+        //transform.Translate(Vector2.right * speed * Time.deltaTime);
         yield return new WaitForSeconds(_waitTime);
-        //DisableMovement = false;
+        DisableMovement = false;
     }
     
 

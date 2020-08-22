@@ -1396,7 +1396,9 @@ MonoBehaviour:
   acid: {fileID: 1811057639}
   speed: 20
   jumpVelocity: 40
+  wallslideVelocity: 120
   multiplier: 1.2
+  wallbounceforce: 5
   originalObject: {fileID: 0}
   reflectedObject: {fileID: 0}
 --- !u!61 &1113399090
@@ -1412,18 +1414,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.048131943, y: -0.9588547}
+  m_Offset: {x: -0.03453636, y: -0.9588547}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 6.1774616, y: 6.1714287}
-    newSize: {x: 5.4052787, y: 5.4}
+    newSize: {x: 6.1774616, y: 6.1714287}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.047804, y: 2.4682846}
+  m_Size: {x: 3.221119, y: 2.4682846}
   m_EdgeRadius: 0
 --- !u!50 &1113399091
 Rigidbody2D:
@@ -1490,7 +1492,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.4052787, y: 5.4}
+  m_Size: {x: 6.1774616, y: 6.1714287}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

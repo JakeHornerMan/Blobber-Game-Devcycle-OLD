@@ -9,7 +9,7 @@ public class Player_Move : MonoBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D bc;
     public Animator anim;
-    private enum State {ground, jump, fall, absorb}
+    private enum State {ground, jump, fall, absorb, slide}
     public ParticleSystem acid;
 
     private bool killable = false;
@@ -17,15 +17,18 @@ public class Player_Move : MonoBehaviour
     private State action;
     public float speed = 10.00f;
     public float jumpVelocity = 40f;
+    public float wallslideVelocity = 100f;
     public float multiplier = 1.2f;
     private float moveX;
     private float points = 100;
     private int pointSet;
     private bool facingRight;
+    private bool Slide;
 
     private IEnumerator coroutine;
 
     //wallbounce test
+    public float wallbounceforce = 5f;
     public Transform originalObject;
     public Transform reflectedObject;
     Vector3 pushRight;
@@ -126,12 +129,17 @@ public class Player_Move : MonoBehaviour
                     action = State.fall;
                     killable = true;
                 }
-                else
+                else if (Slide == false)
                 {
                     action = State.jump;
                     killable = false;
                 }
+                else if (Slide == true)
+                {
+                    action = State.slide;
+                }
             }
+
         Debug.DrawRay(bc.bounds.center + new Vector3(bc.bounds.extents.x, 0),
             Vector2.down * (bc.bounds.extents.y + extraHeightText), rayColor);
         Debug.DrawRay(bc.bounds.center - new Vector3(bc.bounds.extents.x, 0),
@@ -145,38 +153,40 @@ public class Player_Move : MonoBehaviour
     public void wallBounce() {
         if (facingRight == true)
         {
-            coroutine = bounceLeft(0.2f);
+            
+            coroutine = wallSlideLeft(0.2f);
             StartCoroutine(coroutine);
         }
         else if (facingRight== false) {
-            coroutine = bounceRight(0.2f);
+            
+            coroutine = wallSlideRight(0.2f);
             StartCoroutine(coroutine);
         }
     }
 
-    IEnumerator bounceLeft(float _waitTime)
+    IEnumerator wallSlideLeft(float _waitTime)
     {
-        DisableMovement = true;
-        transform.localScale = new Vector2(-1, 1);
-        rb.AddForce(pushRight * speed, ForceMode2D.Impulse);
-        facingRight = false;
-        //rb.velocity = Vector2.left * jumpVelocity;
-        //reflectedObject.position = Vector3.Reflect(originalObject.position, Vector3.left);
-        //transform.Translate(Vector2.left * speed * Time.deltaTime);
-        yield return new WaitForSeconds(_waitTime);
-        DisableMovement = false;
+        if (action == State.jump) {
+            rb.velocity = Vector2.up * wallslideVelocity;
+            //transform.Translate(Vector2.left * speed * Time.deltaTime);
+            Slide = true;
+            transform.localScale = new Vector2(-1, 1);
+            facingRight = false;
+            yield return new WaitForSeconds(_waitTime);
+            Slide = false;
+        }
     }
-    IEnumerator bounceRight(float _waitTime)
+    IEnumerator wallSlideRight(float _waitTime)
     {
-        DisableMovement = true;
-        transform.localScale = new Vector2(1, 1);
-        rb.AddForce(pushRight * speed, ForceMode2D.Impulse);
-        facingRight = true;
-        //rb.velocity = Vector2.right * jumpVelocity;
-        //reflectedObject.position = Vector3.Reflect(originalObject.position, Vector3.right);
-        //transform.Translate(Vector2.right * speed * Time.deltaTime);
-        yield return new WaitForSeconds(_waitTime);
-        DisableMovement = false;
+        if (action == State.jump) {
+            rb.velocity = Vector2.up * wallslideVelocity;
+            //transform.Translate(Vector2.right * speed * Time.deltaTime);
+            Slide = true;
+            transform.localScale = new Vector2(1, 1);
+            facingRight = true;
+            yield return new WaitForSeconds(_waitTime);
+            Slide = false;
+        }
     }
     
 

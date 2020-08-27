@@ -39,11 +39,18 @@ public class fireball : MonoBehaviour
         anim.SetInteger("state", (int)action);
         coroutine = WaitAndDestroy(.5f);
         StartCoroutine(coroutine);
-        
+
     }
     IEnumerator WaitAndDestroy(float _waitTime)
     {
         yield return new WaitForSeconds(_waitTime);
         Destroy(this.gameObject);
+    }
+    void OnCollisionEnter2D(Collision2D player)
+    {
+        if (player.gameObject.tag == "Player")
+        {
+            FindObjectOfType<Health>().Damage();
+        }
     }
 }

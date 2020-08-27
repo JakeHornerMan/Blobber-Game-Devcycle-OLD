@@ -9,10 +9,11 @@ public class Yellow : MonoBehaviour
     public Transform wallDetection;
     private bool movingRight;
     private float chance;
+    public float timebetweenshots;
     [SerializeField] private LayerMask platformLayerMask;
     private IEnumerator coroutine;
     [SerializeField] private GameObject fireballPrefab;
-    GameObject gun;
+    public GameObject gun;
     Vector3 target;
 
     void Start()
@@ -92,7 +93,7 @@ public class Yellow : MonoBehaviour
 
     }
     public void Shooting() {
-        coroutine = ShootTimer(5f);
+        coroutine = ShootTimer(timebetweenshots);
         StartCoroutine(coroutine);
     }
     IEnumerator ShootTimer(float _waitTime) {
@@ -101,7 +102,7 @@ public class Yellow : MonoBehaviour
     }
     public void Shoot() {
         GameObject f = Instantiate(fireballPrefab) as GameObject;
-        gun = GameObject.Find("Gun");
+        //gun = GameObject.Find("Gun");
         target = gun.transform.position;
         f.transform.position = target;
         Shooting();

@@ -84,8 +84,10 @@ public class Player_Move : MonoBehaviour
         {
             rb.velocity = Vector2.up * jumpVelocity;
         }
-        else {
-            return;
+        //it works just wount go back
+        else if (!IsGrounded() && Input.GetKey(KeyCode.Space))
+        {
+            rb.gravityScale = 35;
         }
     }
     private bool IsGrounded() {

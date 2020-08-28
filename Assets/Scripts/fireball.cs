@@ -17,6 +17,7 @@ public class fireball : MonoBehaviour
     {
         player = GameObject.Find("Player");
         ShotPos = player.transform.position;
+        ShotPos.y -= 50;
         action = State.fireball;
         //Move(ShotPos, 15f);
     }
@@ -52,7 +53,7 @@ public class fireball : MonoBehaviour
         if (player.gameObject.tag == "Player")
         {
             FindObjectOfType<Health>().Damage();
-            coroutine = WaitAndExplode(0.1f);
+            coroutine = WaitAndExplode(0f);
             StartCoroutine(coroutine);
         }
     }

@@ -23,16 +23,14 @@ public class wallBounce : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D wall)
     {
-       
-        /*
-        var speed = lastVelocity.magnitude;
-        var direction = Vector3.Reflect(lastVelocity.normalized, wall.contacts[0].normal);
-        rb.velocity = direction * Mathf.Max(speed, 1f);
-        */
         if (wall.gameObject.tag == "Wall")
         {
             //PlayerMove.wallBounce();
+            player.GetComponent<Player_Move>().Slide = true;
             player.GetComponent<Player_Move>().wallBounce();
+        }
+        else {
+            player.GetComponent<Player_Move>().Slide = false;
         }
     }
 }

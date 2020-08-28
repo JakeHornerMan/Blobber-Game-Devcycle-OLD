@@ -23,26 +23,23 @@ public class Player_Move : MonoBehaviour
     private float points = 100;
     private int pointSet;
     private bool facingRight;
-    private bool Slide;
+    public bool Slide;
 
     private IEnumerator coroutine;
 
-    //wallbounce test
-    public float wallbounceforce = 5f;
-    public Transform originalObject;
-    public Transform reflectedObject;
-    Vector3 pushRight;
-    Vector3 pushLeft;
+    //materials
+    private Material matWhite;
+    private Material matDefault;
+    SpriteRenderer sr;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
         bc = transform.GetComponent<BoxCollider2D>();
+        sr.GetComponent<SpriteRenderer>();
+        matWhite = Resources.Load("Font Material", typeof(Material)) as Material;
+        matDefault = sr.material;
         Score.scoreAmount = 0;
-        //wall bounce
-        pushRight = new Vector3(5f, 0f, 0f);
-        pushLeft = new Vector3(-5f, 0f, 0f);
     }
 
     void FixedUpdate()
@@ -87,13 +84,8 @@ public class Player_Move : MonoBehaviour
         {
             rb.velocity = Vector2.up * jumpVelocity;
         }
-        if (!IsGrounded() && Input.GetKeyDown(KeyCode.RightShift)) {
-            //increase gravity scale
-            FindObjectOfType<Rigidbody2D>().gravityScale = 16;
-        }
-        //this achieved nothing
-        else if (!Input.GetKeyDown(KeyCode.RightShift)) {
-            FindObjectOfType<Rigidbody2D>().gravityScale = 8;
+        else {
+            return;
         }
     }
     private bool IsGrounded() {
@@ -129,12 +121,12 @@ public class Player_Move : MonoBehaviour
                     action = State.fall;
                     killable = true;
                 }
-                else if (Slide == false)
+                else if (rb.velocity.y > .1f && Slide == false)
                 {
                     action = State.jump;
                     killable = false;
                 }
-                else if (Slide == true)
+                else if (rb.velocity.y > 0f && Slide == true)
                 {
                     action = State.slide;
                 }
@@ -168,24 +160,18 @@ public class Player_Move : MonoBehaviour
     {
         if (action == State.jump) {
             rb.velocity = Vector2.up * wallslideVelocity;
-            //transform.Translate(Vector2.left * speed * Time.deltaTime);
-            Slide = true;
             transform.localScale = new Vector2(-1, 1);
             facingRight = false;
             yield return new WaitForSeconds(_waitTime);
-            Slide = false;
         }
     }
     IEnumerator wallSlideRight(float _waitTime)
     {
         if (action == State.jump) {
             rb.velocity = Vector2.up * wallslideVelocity;
-            //transform.Translate(Vector2.right * speed * Time.deltaTime);
-            Slide = true;
             transform.localScale = new Vector2(1, 1);
             facingRight = true;
             yield return new WaitForSeconds(_waitTime);
-            Slide = false;
         }
     }
     
@@ -196,27 +182,24 @@ public class Player_Move : MonoBehaviour
         if (!IsGrounded() && killable == true && action == State.absorb)
         {
             killable = false;
-            if (other.gameObject.tag == "Enemy") //&& blue.mode != State.death)
+            if (other.gameObject.tag == "Enemy") 
             {
                 killable = false;
                 blue.JumpedOn();
                 blue.Death();
-                coroutine = WaitAndJump(1.5f);//2.2);
+                coroutine = WaitAndJump(1.5f);
                 StartCoroutine(coroutine);
                 killable = false;
             }
-            /*else if (other.gameObject.tag == "Enemy" && action == State.absorb)
-            {
-                return;
-            }*/
         }
     }
     IEnumerator WaitAndJump(float _waitTime)
     {
         DisableMovement = true;
-      
+        GetComponent<Health>().Damagable = false;
         yield return new WaitForSeconds(_waitTime);
         DisableMovement = false;
+        GetComponent<Health>().Damagable = true;
         JumpMultiplier();
         AddPoints();
         
@@ -252,6 +235,17 @@ public class Player_Move : MonoBehaviour
             points = 500;
         }
         Score.scoreAmount += points;
+    }
+
+    public void takingDamage() {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        coroutine = whitecolor(0.5f);
+        StartCoroutine(coroutine);
+    }
+    IEnumerator whitecolor(float _waitTime)
+    {
+        yield return new WaitForSeconds(_waitTime);
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 }
 

@@ -392,7 +392,7 @@ MonoBehaviour:
   platformLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  fireballPrefab: {fileID: 2139023775168151847, guid: ef95459b3c7018c48a6f6a0e9b21176c,
+  fireballPrefab: {fileID: 6881444266018406050, guid: ef95459b3c7018c48a6f6a0e9b21176c,
     type: 3}
   gun: {fileID: 880841549}
 --- !u!95 &123141058
@@ -516,7 +516,7 @@ MonoBehaviour:
   platformLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  fireballPrefab: {fileID: 2139023775168151847, guid: ef95459b3c7018c48a6f6a0e9b21176c,
+  fireballPrefab: {fileID: 6881444266018406050, guid: ef95459b3c7018c48a6f6a0e9b21176c,
     type: 3}
   gun: {fileID: 955803905}
 --- !u!95 &253697402
@@ -1110,7 +1110,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 88d6d3905f8b6694f948e785443374f4, type: 3}
@@ -1295,7 +1295,7 @@ MonoBehaviour:
   platformLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  fireballPrefab: {fileID: 2139023775168151847, guid: ef95459b3c7018c48a6f6a0e9b21176c,
+  fireballPrefab: {fileID: 6881444266018406050, guid: ef95459b3c7018c48a6f6a0e9b21176c,
     type: 3}
   gun: {fileID: 868065034}
 --- !u!95 &803419516
@@ -1868,9 +1868,7 @@ MonoBehaviour:
   jumpVelocity: 40
   wallslideVelocity: 120
   multiplier: 1.2
-  wallbounceforce: 5
-  originalObject: {fileID: 0}
-  reflectedObject: {fileID: 0}
+  Slide: 0
 --- !u!61 &1113399090
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1883,8 +1881,8 @@ BoxCollider2D:
   m_Material: {fileID: 6200000, guid: d4d68c94d7234e743932bf0ea96eca8b, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.2300725, y: -2.047203}
+  m_UsedByComposite: 1
+  m_Offset: {x: 0.2300725, y: -1.0450096}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1895,7 +1893,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.238287, y: 0.29158783}
+  m_Size: {x: 2.238287, y: 2.2959747}
   m_EdgeRadius: 0
 --- !u!50 &1113399091
 Rigidbody2D:
@@ -2026,6 +2024,7 @@ MonoBehaviour:
     type: 3}
   halfHeart: {fileID: -8479497761069723429, guid: f36ef45c3c863a34086e21874ef08e18,
     type: 3}
+  Damagable: 1
 --- !u!114 &1113399096
 MonoBehaviour:
   m_ObjectHideFlags: 0

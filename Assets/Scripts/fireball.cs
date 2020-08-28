@@ -18,13 +18,14 @@ public class fireball : MonoBehaviour
         player = GameObject.Find("Player");
         ShotPos = player.transform.position;
         action = State.fireball;
+        //Move(ShotPos, 15f);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         Move(ShotPos, 15f);
-        coroutine = WaitAndExplode(3.5f);
+        coroutine = WaitAndExplode(3f);
         StartCoroutine(coroutine);
     }
     private void Move(Vector3 target, float movementSpeed)
@@ -46,11 +47,13 @@ public class fireball : MonoBehaviour
         yield return new WaitForSeconds(_waitTime);
         Destroy(this.gameObject);
     }
-    void OnCollisionEnter2D(Collision2D player)
+    void OnTriggerEnter2D(Collider2D player)
     {
         if (player.gameObject.tag == "Player")
         {
             FindObjectOfType<Health>().Damage();
+            coroutine = WaitAndExplode(0.1f);
+            StartCoroutine(coroutine);
         }
     }
 }

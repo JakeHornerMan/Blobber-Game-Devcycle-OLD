@@ -14,15 +14,17 @@ public class Health : MonoBehaviour
     public Sprite emptyHeart;
     public Sprite halfHeart;
 
-    private bool Damagable = true;
+    public bool Damagable = true;
     private IEnumerator coroutine;
 
     void Start(){
-        if (health > numOfHearts || health < numOfHearts)
+        
+        /*if (health > numOfHearts || health < numOfHearts)
         {
             //health = numOfHearts;
-        }
-     }
+        }*/
+    }
+
     void Update() {
         for (int i = 0; i < hearts.Length; i++)
         {
@@ -45,27 +47,29 @@ public class Health : MonoBehaviour
             }
         }
     }
+
     public void Damage() {
 
         if (Damagable == true) {
             health = health - 1;
+            coroutine = InVunrable(2f);
+            StartCoroutine(coroutine);
         }
-        
-        coroutine = InVunrable(2f);
-        StartCoroutine(coroutine);
         if (health == 0)
         {
             DeathEnding();
         }
     }
+
     IEnumerator InVunrable(float _waitTime)
     {
         Damagable = false;
-        //insert trigger for hurt animation
+        GetComponent<Player_Move>().takingDamage();
         yield return new WaitForSeconds(_waitTime);
         Damagable = true;
     }
-        public void DeathEnding(){
+
+    public void DeathEnding(){
         FindObjectOfType<GameManager>().GameOver();
     }
 }

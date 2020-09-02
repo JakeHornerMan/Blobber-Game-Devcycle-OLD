@@ -1837,7 +1837,7 @@ GameObject:
   - component: {fileID: 1113399089}
   - component: {fileID: 1113399095}
   - component: {fileID: 1113399096}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1869,9 +1869,6 @@ MonoBehaviour:
   wallslideVelocity: 120
   multiplier: 1.2
   Slide: 0
-  object1: {fileID: 1113399088}
-  object2: {fileID: 7678033699902811339, guid: 7144341080b6e3d4493fe95b90b38425, type: 3}
-  blue: {fileID: 0}
 --- !u!61 &1113399090
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2532,7 +2529,7 @@ GameObject:
   - component: {fileID: 1811057637}
   - component: {fileID: 1811057639}
   - component: {fileID: 1811057638}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AcidPS
   m_TagString: Untagged
   m_Icon: {fileID: 0}

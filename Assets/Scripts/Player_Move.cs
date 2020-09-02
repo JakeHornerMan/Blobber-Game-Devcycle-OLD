@@ -26,11 +26,9 @@ public class Player_Move : MonoBehaviour
     public bool Slide;
 
     private IEnumerator coroutine;
-    
+
     //ignore collisions
-    public GameObject object1;
-    public GameObject object2;
-    public GameObject blue;
+    bool cantAbsorb;
 
     //materials
     private Material matWhite;
@@ -45,7 +43,6 @@ public class Player_Move : MonoBehaviour
         matWhite = Resources.Load("Font Material", typeof(Material)) as Material;
         matDefault = sr.material;
         Score.scoreAmount = 0;
-        blue = GameObject.Find("Blue");
     }
 
     void FixedUpdate()
@@ -115,7 +112,7 @@ public class Player_Move : MonoBehaviour
                 rayColor = Color.green;
             }
             
-            else if (raycastHit2.collider != null)
+            else if (raycastHit2.collider != null && cantAbsorb == false)
             {
                 action = State.absorb;
                 acid.Play();
@@ -186,8 +183,14 @@ public class Player_Move : MonoBehaviour
 
     //Doesnt work yet
     public void CollisionIgnore() {
-        if (action != State.fall) {
-            Physics2D.IgnoreCollision (bc, blue.GetComponent<Collider2D>());
+        if (action == State.jump)
+        {
+            Physics2D.IgnoreLayerCollision(9, 8, true);
+            cantAbsorb = true;
+        }
+        else {
+            cantAbsorb = false;
+            Physics2D.IgnoreLayerCollision(9, 8, false);
         }
     }
 

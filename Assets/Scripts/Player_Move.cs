@@ -26,6 +26,11 @@ public class Player_Move : MonoBehaviour
     public bool Slide;
 
     private IEnumerator coroutine;
+    
+    //ignore collisions
+    public GameObject object1;
+    public GameObject object2;
+    public GameObject blue;
 
     //materials
     private Material matWhite;
@@ -40,12 +45,14 @@ public class Player_Move : MonoBehaviour
         matWhite = Resources.Load("Font Material", typeof(Material)) as Material;
         matDefault = sr.material;
         Score.scoreAmount = 0;
+        blue = GameObject.Find("Blue");
     }
 
     void FixedUpdate()
     {
         playerMove();
-        anim.SetInteger("state", (int)action); 
+        anim.SetInteger("state", (int)action);
+        CollisionIgnore();
     }
 
     public void playerMove()
@@ -85,10 +92,10 @@ public class Player_Move : MonoBehaviour
             rb.velocity = Vector2.up * jumpVelocity;
         }
         //it works just wount go back
-        else if (!IsGrounded() && Input.GetKey(KeyCode.Space))
+        /*else if (!IsGrounded() && Input.GetKey(KeyCode.Space))
         {
             rb.gravityScale = 35;
-        }
+        }*/
     }
     private bool IsGrounded() {
 
@@ -176,7 +183,13 @@ public class Player_Move : MonoBehaviour
             yield return new WaitForSeconds(_waitTime);
         }
     }
-    
+
+    //Doesnt work yet
+    public void CollisionIgnore() {
+        if (action != State.fall) {
+            Physics2D.IgnoreCollision (bc, blue.GetComponent<Collider2D>());
+        }
+    }
 
     void OnCollisionEnter2D(Collision2D other)
     {

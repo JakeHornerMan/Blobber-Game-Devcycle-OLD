@@ -1869,6 +1869,9 @@ MonoBehaviour:
   wallslideVelocity: 120
   multiplier: 1.2
   Slide: 0
+  object1: {fileID: 1113399088}
+  object2: {fileID: 7678033699902811339, guid: 7144341080b6e3d4493fe95b90b38425, type: 3}
+  blue: {fileID: 0}
 --- !u!61 &1113399090
 BoxCollider2D:
   m_ObjectHideFlags: 0

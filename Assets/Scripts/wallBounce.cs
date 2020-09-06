@@ -17,10 +17,10 @@ public class wallBounce : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         lastVelocity = rb.velocity;
-    }
+    }*/
     void OnCollisionEnter2D(Collision2D wall)
     {
         if (wall.gameObject.tag == "Wall")
@@ -28,6 +28,7 @@ public class wallBounce : MonoBehaviour
             //PlayerMove.wallBounce();
             player.GetComponent<Player_Move>().Slide = true;
             player.GetComponent<Player_Move>().wallBounce();
+            //FindObjectOfType<Player_Move>().action = State.slide; 
         }
         else {
             player.GetComponent<Player_Move>().Slide = false;

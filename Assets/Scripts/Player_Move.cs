@@ -9,12 +9,12 @@ public class Player_Move : MonoBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D bc;
     public Animator anim;
-    private enum State {ground, jump, fall, absorb, slide}
+    public enum State {ground, jump, fall, absorb, slide}
     public ParticleSystem acid;
 
     private bool killable = false;
     private bool DisableMovement = false;
-    private State action;
+    public State action;
     public float speed = 10.00f;
     public float jumpVelocity = 40f;
     public float wallslideVelocity = 100f;
@@ -89,10 +89,13 @@ public class Player_Move : MonoBehaviour
             rb.velocity = Vector2.up * jumpVelocity;
         }
         //it works just wount go back
-        /*else if (!IsGrounded() && Input.GetKey(KeyCode.Space))
+        else if (!IsGrounded() && Input.GetKey(KeyCode.LeftAlt))
         {
             rb.gravityScale = 35;
-        }*/
+        }
+        else if (!IsGrounded() && !Input.GetKey(KeyCode.LeftAlt)) {
+            rb.gravityScale = 7;
+        }
     }
     private bool IsGrounded() {
 
@@ -200,7 +203,7 @@ public class Player_Move : MonoBehaviour
         if (!IsGrounded() && killable == true && action == State.absorb)
         {
             killable = false;
-            if (other.gameObject.tag == "Enemy") 
+            if (other.gameObject.tag == "Enemy")
             {
                 killable = false;
                 blue.JumpedOn();
@@ -210,6 +213,10 @@ public class Player_Move : MonoBehaviour
                 killable = false;
             }
         }
+        /*else if (other.gameObject.tag == "Wall")
+        {
+            action = State.slide;
+        }*/
     }
     IEnumerator WaitAndJump(float _waitTime)
     {

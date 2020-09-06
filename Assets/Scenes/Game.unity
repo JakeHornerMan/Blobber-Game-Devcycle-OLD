@@ -1864,6 +1864,7 @@ MonoBehaviour:
     m_Bits: 256
   anim: {fileID: 1113399094}
   acid: {fileID: 1811057639}
+  action: 0
   speed: 20
   jumpVelocity: 40
   wallslideVelocity: 120

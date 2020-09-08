@@ -16,7 +16,7 @@ public class Player_Move : MonoBehaviour
     private bool DisableMovement = false;
     public State action;
     public float speed = 10.00f;
-    public float jumpVelocity = 40f;
+    public float jumpVelocity;
     public float wallslideVelocity = 100f;
     public float multiplier = 1.2f;
     private float moveX;
@@ -34,6 +34,11 @@ public class Player_Move : MonoBehaviour
     private Material matWhite;
     private Material matDefault;
     SpriteRenderer sr;
+
+    //Movement
+    public bool moveLeft;
+    public bool dontMove;
+    public bool canJump;
 
     void Start()
     {
@@ -64,7 +69,7 @@ public class Player_Move : MonoBehaviour
     }
 
     void Movement() {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow ))
         {
             rb.velocity = new Vector2(-speed, rb.velocity.y);
             transform.localScale = new Vector2(-1, 1);
@@ -82,8 +87,7 @@ public class Player_Move : MonoBehaviour
             }
         }
     }
-    void Jump()
-    {
+    void Jump() {
         if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
         {
             rb.velocity = Vector2.up * jumpVelocity;
@@ -94,7 +98,7 @@ public class Player_Move : MonoBehaviour
             rb.gravityScale = 35;
         }
         else if (!IsGrounded() && !Input.GetKey(KeyCode.LeftAlt)) {
-            rb.gravityScale = 7;
+            rb.gravityScale = 8;
         }
     }
     private bool IsGrounded() {
@@ -271,6 +275,13 @@ public class Player_Move : MonoBehaviour
     {
         yield return new WaitForSeconds(_waitTime);
         GetComponent<SpriteRenderer>().color = Color.white;
+    }
+    //touch Controls
+    public void touchJump() {
+        if (IsGrounded())
+        {
+            rb.velocity = Vector2.up * jumpVelocity;
+        }
     }
 }
 

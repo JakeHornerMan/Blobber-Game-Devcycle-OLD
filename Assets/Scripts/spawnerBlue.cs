@@ -41,7 +41,7 @@ public class spawnerBlue : MonoBehaviour
     {
         mode = State.open;
         GameObject b = Instantiate(bluePrefab) as GameObject;
-        b.transform.position = new Vector3(8.6f, -5.26f, 0f);
+        b.transform.position = new Vector3(8.5f, -3.98f, 0f);
         yield return new WaitForSeconds(_waitTime);
         closing();
         

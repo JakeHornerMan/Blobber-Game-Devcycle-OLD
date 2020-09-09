@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Countdown : MonoBehaviour
 {
-    public float timeStart = 60;
+    public float timeStart ;
     public Text Timer;
     // Start is called before the first frame update
     void Start()

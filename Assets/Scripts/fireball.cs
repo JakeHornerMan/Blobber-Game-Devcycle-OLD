@@ -25,8 +25,8 @@ public class fireball : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Move(ShotPos, 15f);
-        coroutine = WaitAndExplode(3f);
+        Move(ShotPos, 10f);
+        coroutine = WaitAndExplode(4.5f);
         StartCoroutine(coroutine);
     }
     private void Move(Vector3 target, float movementSpeed)

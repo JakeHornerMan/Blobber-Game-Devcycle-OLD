@@ -24,6 +24,7 @@ public class Player_Move : MonoBehaviour
     private int pointSet;
     private bool facingRight;
     public bool Slide;
+    public float baseGravity;
 
     private IEnumerator coroutine;
 
@@ -35,10 +36,9 @@ public class Player_Move : MonoBehaviour
     private Material matDefault;
     SpriteRenderer sr;
 
-    //Movement
-    public bool moveLeft;
-    public bool dontMove;
-    public bool canJump;
+    // touch Movement 
+    public bool moveLeft; // left or right
+    public bool dontMove; //move or not
 
     void Start()
     {
@@ -48,7 +48,9 @@ public class Player_Move : MonoBehaviour
         matWhite = Resources.Load("Font Material", typeof(Material)) as Material;
         matDefault = sr.material;
         Score.scoreAmount = 0;
-    }
+        moveLeft = true; 
+        dontMove = true;
+}
 
     void FixedUpdate()
     {
@@ -62,6 +64,7 @@ public class Player_Move : MonoBehaviour
         if (DisableMovement == false) {
             Jump();
             Movement();
+            touchHandleMoving();
         }
         else if (DisableMovement == true) {
             rb.velocity = new Vector2(0, 0);
@@ -114,7 +117,8 @@ public class Player_Move : MonoBehaviour
             if (raycastHit.collider != null)
             {
                 action = State.ground;
-                jumpVelocity = 40f;
+                jumpVelocity = 50f;
+                rb.gravityScale = baseGravity;
                 pointSet = 0;
                 rayColor = Color.green;
             }
@@ -277,10 +281,62 @@ public class Player_Move : MonoBehaviour
         GetComponent<SpriteRenderer>().color = Color.white;
     }
     //touch Controls
+    public void touchHandleMoving() {
+        if (dontMove == true)
+        {
+            touchStopMoving();
+        }
+        /*else if (dontMove == false)
+        {*/
+            if (moveLeft == true) {
+                touchMovingLeft();
+            } else if (moveLeft == false) {
+                touchMovingRight();
+            }
+        //}
+    }
+    public void touchAllowMovement(bool movement) {
+        dontMove = false;
+        moveLeft = movement;
+    }
+    public void touchDontMove() {
+        dontMove = true;
+    }
     public void touchJump() {
         if (IsGrounded())
         {
             rb.velocity = Vector2.up * jumpVelocity;
+        }
+    }
+    public void touchMovingLeft() {
+        if (dontMove == false)
+        {
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
+            transform.localScale = new Vector2(-1, 1);
+            facingRight = false;
+        }
+    }
+    public void touchMovingRight() {
+        if (dontMove == false)
+        {
+            rb.velocity = new Vector2(+speed, rb.velocity.y);
+            transform.localScale = new Vector2(1, 1);
+            facingRight = true;
+        }
+    }
+    public void touchStopMoving() {
+        rb.velocity = new Vector2(0, rb.velocity.y);
+    }
+    public void touchSlam() {
+        if (!IsGrounded())
+        {
+            rb.gravityScale = 35;
+        }
+    }
+    public void touchSlamStop(){
+        if (!IsGrounded())
+        {
+            rb.gravityScale = baseGravity;
         }
     }
 }

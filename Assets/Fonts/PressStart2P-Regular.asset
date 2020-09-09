@@ -2432,7 +2432,7 @@ Material:
     - _VertexOffsetY: 0
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
-    - _FaceColor: {r: 0.08884275, g: 1, b: 0, a: 1}
+    - _FaceColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!28 &8506090799193740032
 Texture2D:
   m_ObjectHideFlags: 0

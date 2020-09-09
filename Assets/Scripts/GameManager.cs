@@ -6,18 +6,41 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public void StartGame() {
+    private IEnumerator coroutine;
+
+    public void StartGame()
+    {
         SceneManager.LoadScene("Game");
     }
 
-    public void GameOver() {
+    public void GameOver()
+    {
         SceneManager.LoadScene("GameOver");
     }
 
-    public void Restart() {
-        SceneManager.LoadScene("Game");
+    public void GoMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
-    public void QuitGame() {
+
+    public void Scoreboard()
+    {
+        //scoreboard script
+    }
+
+    public void QuitGame()
+    {
         Application.Quit();
+    }
+
+    public void titleStart()
+    {
+        FindObjectOfType<titleblue>().willRun = true;
+        coroutine = WaitandPlay(3f);
+        StartCoroutine(coroutine);
+    }
+    IEnumerator WaitandPlay(float _waitTime){
+        yield return new WaitForSeconds(_waitTime);
+        SceneManager.LoadScene("Game");
     }
 }

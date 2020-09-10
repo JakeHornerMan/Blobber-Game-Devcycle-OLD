@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Game");
+        Score.scoreAmount = 0;
     }
 
     public void GameOver()
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator WaitandPlay(float _waitTime){
         yield return new WaitForSeconds(_waitTime);
+        Score.scoreAmount = 0;
         SceneManager.LoadScene("Game");
     }
 }

@@ -30,6 +30,7 @@ public class Player_Move : MonoBehaviour
 
     //ignore collisions
     bool cantAbsorb;
+    private Vector2 playerPos;
 
     //materials
     private Material matWhite;
@@ -38,7 +39,8 @@ public class Player_Move : MonoBehaviour
 
     // touch Movement 
     public bool moveLeft; // left or right
-    public bool dontMove; //move or not
+    public bool dontMove = true; //move or not
+    public bool tSlam;
 
     void Start()
     {
@@ -48,9 +50,7 @@ public class Player_Move : MonoBehaviour
         matWhite = Resources.Load("Font Material", typeof(Material)) as Material;
         matDefault = sr.material;
         Score.scoreAmount = 0;
-        moveLeft = true; 
-        dontMove = true;
-}
+    }
 
     void FixedUpdate()
     {
@@ -59,21 +59,26 @@ public class Player_Move : MonoBehaviour
         CollisionIgnore();
     }
 
+    //Allowing player to move
     public void playerMove()
     {
         if (DisableMovement == false) {
             Jump();
             Movement();
             touchHandleMoving();
+            touchSlam();
         }
         else if (DisableMovement == true) {
             rb.velocity = new Vector2(0, 0);
         }
     }
 
+    //Direction fuction
     void Movement() {
         if (Input.GetKey(KeyCode.LeftArrow ))
         {
+            dontMove = false;
+            moveLeft = true;
             rb.velocity = new Vector2(-speed, rb.velocity.y);
             transform.localScale = new Vector2(-1, 1);
             facingRight = false;
@@ -81,15 +86,20 @@ public class Player_Move : MonoBehaviour
         else {
             if (Input.GetKey(KeyCode.RightArrow))
             {
+                dontMove = false;
+                moveLeft = false;
                 rb.velocity = new Vector2(+speed, rb.velocity.y);
                 transform.localScale = new Vector2(1, 1);
                 facingRight = true;
             }
             else {
+                //dontMove = true;
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
         }
     }
+
+    //Jump Fuction
     void Jump() {
         if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
         {
@@ -104,6 +114,7 @@ public class Player_Move : MonoBehaviour
             rb.gravityScale = 8;
         }
     }
+    //see when touching floor
     private bool IsGrounded() {
 
         float extraHeightText = 0.1f;
@@ -159,6 +170,7 @@ public class Player_Move : MonoBehaviour
         return raycastHit.collider != null;
     }
 
+    //wall slide when jumping up into wall 
     public void wallBounce() {
         if (facingRight == true)
         {
@@ -192,9 +204,10 @@ public class Player_Move : MonoBehaviour
         }
     }
 
-    //Doesnt work yet
+    //jump up through enemys
     public void CollisionIgnore() {
-        if (action == State.jump)
+        playerPos = GameObject.Find("Player").transform.position;
+        if (action == State.jump || playerPos.y <= 2.16)
         {
             Physics2D.IgnoreLayerCollision(9, 8, true);
             cantAbsorb = true;
@@ -205,6 +218,7 @@ public class Player_Move : MonoBehaviour
         }
     }
 
+    //Enemy interaction
     void OnCollisionEnter2D(Collision2D other)
     {
         Blue blue = other.gameObject.GetComponent<Blue>();
@@ -221,10 +235,6 @@ public class Player_Move : MonoBehaviour
                 killable = false;
             }
         }
-        /*else if (other.gameObject.tag == "Wall")
-        {
-            action = State.slide;
-        }*/
     }
     IEnumerator WaitAndJump(float _waitTime)
     {
@@ -245,6 +255,8 @@ public class Player_Move : MonoBehaviour
         }
         rb.velocity = Vector2.up * jumpVelocity;
     }
+    
+    //Add points when enemy death
     public void AddPoints() {
         pointSet++;
         if (pointSet == 1 || pointSet == 2)
@@ -270,6 +282,7 @@ public class Player_Move : MonoBehaviour
         Score.scoreAmount += points;
     }
 
+    //Spite color when damaged
     public void takingDamage() {
         GetComponent<SpriteRenderer>().color = Color.red;
         coroutine = whitecolor(0.5f);
@@ -280,24 +293,25 @@ public class Player_Move : MonoBehaviour
         yield return new WaitForSeconds(_waitTime);
         GetComponent<SpriteRenderer>().color = Color.white;
     }
+
     //touch Controls
     public void touchHandleMoving() {
         if (dontMove == true)
         {
             touchStopMoving();
         }
-        /*else if (dontMove == false)
-        {*/
-            if (moveLeft == true) {
-                touchMovingLeft();
-            } else if (moveLeft == false) {
-                touchMovingRight();
-            }
-        //}
+        else if (dontMove == false)
+        {
+            touchMoving();
+        }
     }
     public void touchAllowMovement(bool movement) {
         dontMove = false;
         moveLeft = movement;
+    }
+    public void touchAllowSlam(bool slam)
+    {
+        tSlam = slam;
     }
     public void touchDontMove() {
         dontMove = true;
@@ -308,17 +322,14 @@ public class Player_Move : MonoBehaviour
             rb.velocity = Vector2.up * jumpVelocity;
         }
     }
-    public void touchMovingLeft() {
-        if (dontMove == false)
+    public void touchMoving() {
+        if (dontMove == false && moveLeft == true)
         {
             rb.velocity = new Vector2(-speed, rb.velocity.y);
             transform.localScale = new Vector2(-1, 1);
             facingRight = false;
         }
-    }
-    public void touchMovingRight() {
-        if (dontMove == false)
-        {
+        else if (dontMove == false && moveLeft == false){
             rb.velocity = new Vector2(+speed, rb.velocity.y);
             transform.localScale = new Vector2(1, 1);
             facingRight = true;
@@ -328,13 +339,11 @@ public class Player_Move : MonoBehaviour
         rb.velocity = new Vector2(0, rb.velocity.y);
     }
     public void touchSlam() {
-        if (!IsGrounded())
+        if (!IsGrounded() && tSlam == true)
         {
             rb.gravityScale = 35;
         }
-    }
-    public void touchSlamStop(){
-        if (!IsGrounded())
+        else if (!IsGrounded() && tSlam == false)
         {
             rb.gravityScale = baseGravity;
         }

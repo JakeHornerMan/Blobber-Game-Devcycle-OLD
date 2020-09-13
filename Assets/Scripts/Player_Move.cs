@@ -93,7 +93,7 @@ public class Player_Move : MonoBehaviour
                 facingRight = true;
             }
             else {
-                //dontMove = true;
+                dontMove = true;
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
         }
@@ -230,7 +230,7 @@ public class Player_Move : MonoBehaviour
                 killable = false;
                 blue.JumpedOn();
                 blue.Death();
-                coroutine = WaitAndJump(1.5f);
+                coroutine = WaitAndJump(1.3f);
                 StartCoroutine(coroutine);
                 killable = false;
             }
@@ -254,6 +254,7 @@ public class Player_Move : MonoBehaviour
             jumpVelocity = 150f;
         }
         rb.velocity = Vector2.up * jumpVelocity;
+        SoundManager.PlaySound("absorbJump");
     }
     
     //Add points when enemy death
@@ -285,6 +286,7 @@ public class Player_Move : MonoBehaviour
     //Spite color when damaged
     public void takingDamage() {
         GetComponent<SpriteRenderer>().color = Color.red;
+        SoundManager.PlaySound("hurt");
         coroutine = whitecolor(0.5f);
         StartCoroutine(coroutine);
     }

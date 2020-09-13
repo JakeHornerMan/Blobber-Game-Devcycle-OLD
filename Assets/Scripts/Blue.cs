@@ -99,6 +99,7 @@ public class Blue : MonoBehaviour
 
     public void JumpedOn(){
         mode = State.death;
+        SoundManager.PlaySound("absorb");
         FindObjectOfType<spawnerBlue>().opening();
     }
 }

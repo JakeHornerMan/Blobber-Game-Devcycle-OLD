@@ -28,6 +28,7 @@ public class fireball : MonoBehaviour
         Move(ShotPos, 10f);
         coroutine = WaitAndExplode(4.5f);
         StartCoroutine(coroutine);
+        exploSound();
     }
     private void Move(Vector3 target, float movementSpeed)
     {
@@ -55,6 +56,11 @@ public class fireball : MonoBehaviour
             FindObjectOfType<Health>().Damage();
             coroutine = WaitAndExplode(0f);
             StartCoroutine(coroutine);
+        }
+    }
+    void exploSound() {
+        if (action == State.explode) {
+            SoundManager.PlaySound("explosion");
         }
     }
 }

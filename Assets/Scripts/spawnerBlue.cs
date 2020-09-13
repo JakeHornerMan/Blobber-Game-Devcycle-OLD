@@ -35,6 +35,7 @@ public class spawnerBlue : MonoBehaviour
         
         coroutine = WaitAndCreate(0.3f);
         StartCoroutine(coroutine);
+        SoundManager.PlaySound("spawnDing");
     }
  
     IEnumerator WaitAndCreate(float _waitTime)

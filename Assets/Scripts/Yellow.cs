@@ -102,7 +102,7 @@ public class Yellow : MonoBehaviour
     }
     public void Shoot() {
         GameObject f = Instantiate(fireballPrefab) as GameObject;
-        //gun = GameObject.Find("Gun");
+        SoundManager.PlaySound("shoot");
         target = gun.transform.position;
         f.transform.position = target;
         Shooting();
